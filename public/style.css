@@ -1,0 +1,398 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI';
+}
+
+*>button {
+    cursor: pointer;
+    font-weight: bold;
+    color: aliceblue;
+    font-size: medium;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("https://www.alderley.com/wp-content/uploads/2021/03/Digital_Cover_Website_1200x675pts.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: color-dodge;
+}
+
+.navbar {
+    position: fixed;
+    z-index: 99;
+    width: 96%;
+    margin: 1rem 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background-color: aliceblue;
+    box-shadow: 0 0 2px 0 #21215b66;
+}
+
+.app-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.appname h5,
+.appname h3 {
+    margin: 0 1rem;
+    color: #21215b;
+}
+
+.appname h3,
+form h3 {
+    font-family: "ADLaM Display", 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+.search-auth-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search-wrapper {
+    width: min(11rem, 90%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 0 1px 0 #21215b;
+    border-radius: 20px;
+}
+
+.search-wrapper input {
+    width: 80%;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-group button {
+    min-width: 6rem;
+    padding: 0.5rem 1rem;
+    background-color: #6565bacc;
+    outline: 0;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 1px #21215b;
+}
+
+.btn-group button:nth-of-type(2):hover,
+.btn-group button:nth-of-type(2):focus {
+    background-color: #6565ba;
+}
+
+.btn-group button:nth-of-type(1) {
+    color: #21215b;
+    background-color: #f0f8ff;
+    box-shadow: 0 0 1px #21215b;
+}
+
+.btn-group button:nth-of-type(1):hover,
+.btn-group button:nth-of-type(1):focus {
+    background-color: #85859d33;
+}
+
+.aesthetics {
+    width: 100%;
+    height: 15rem;
+    background-color: transparent;
+}
+
+section.hero {
+    width: 100%;
+    padding: 1rem 2rem;
+    padding-bottom: 20rem;
+    background-color: aliceblue;
+    background-image: url("../assets/background.svg");
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: lighten;
+}
+
+.hero > p, .hero > h2 {
+    padding-right: 20%;
+    font-size: 1.7em;
+}
+
+.hero > h2 {
+    text-transform: uppercase;
+    background-image: linear-gradient(to right, #166566, rgb(9, 194, 194), lime);
+    background-clip: text;
+    color: transparent;
+}
+
+#hero-text {
+    padding-left: 1rem;
+    border-left: 4px groove #21215b11;
+}
+
+.features {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.feature-container {
+    position: relative;
+    width: 20rem;
+    min-width: 20rem;
+    height: 15rem;
+    background-image: url("../assets/search.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 2px 0 #21215b33;
+}
+
+.feature-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    font-size: large;
+    color: #f0f8ff;
+    background-image: linear-gradient(to top, #09D46B 20%, #00000000 90%);
+    text-shadow: 1px 1px 1px #21215b;
+    overflow: hidden;
+}
+
+.feature-text > h3 {
+    margin: 0;
+}
+
+.feature-container.request {
+    background-image: url("../assets/request.svg");
+}
+
+.feature-text.request {
+    background-image: linear-gradient(to top, #E51684 20%, #00000000 90%);
+}
+
+.feature-container.authorized {
+    background-image: url("../assets/authorized.svg");
+}
+
+.feature-text.authorized {
+    background-image: linear-gradient(to top, #407BFF 20%, #00000000 90%);
+}
+
+.feature-container.issues {
+    background-image: url("../assets/assistant.svg");
+}
+
+.feature-text.issues {
+    background-image: linear-gradient(to top, #891FBA 20%, #00000000 90%);
+}
+
+/* Forms */
+
+section#forms {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000099;
+    backdrop-filter: blur(6px);
+}
+
+.card.form {
+    width: 70%;
+    min-width: 40rem;
+    min-height: 35rem;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 100px 0 #00000022;
+    border-radius: 20px;
+}
+
+#close-form {
+    width: 2rem;
+    height: 2rem;
+    margin: 1rem;
+    outline: 0;
+    border: 0;
+    color: #21215b;
+    border-radius: 50%;
+}
+
+#forms form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-radius: 20px 0 0 20px;
+    background-color: aliceblue;
+}
+
+form#signup-form {
+    display: none;
+}
+
+form#login-form {
+    display: flex;
+}
+
+form .input-wrapper,
+form button {
+    width: 80%;
+    outline: 0;
+    border: 0;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    padding: 0 0.5rem;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+}
+
+form .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: white;
+    box-shadow: 0 0 2px 0 #21215b33;
+}
+
+.input-wrapper label {
+    font-size: small;
+    font-weight: bold;
+    color: #8f8f8faa;
+}
+
+.input-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-wrapper:focus-within {
+    box-shadow: 0 0 2px 0 #21215b;
+}
+
+
+.invalid:focus-within,
+.input-wrapper.invalid {
+    box-shadow: 0 0 2px 0 #ff0000;
+}
+
+.valid:focus-within {
+    box-shadow: 0 0 2px 0 #09D46B;
+}
+
+.input-error {
+    width: 80%;
+    display: none;
+    color: #ff0000aa;
+    font-size: small;
+    font-weight: bold;
+    margin: 0;
+}
+
+.input-error > i {
+    font-size: medium;
+}
+
+.input-icon i {
+    font-size: large;
+    color: #6565ba;
+}
+
+#forgot-password {
+    width: 80%;
+    font-size: small;
+
+}
+
+form button {
+    background-color: #6565ba;
+}
+
+form button:hover,
+form button:active {
+    background-color: #21215b;
+}
+
+p.account-exists {
+    margin: 0;
+    font-size: small;
+}
+
+.form-toggle-btn {
+    width: fit-content;
+    display: inline;
+    float: inline-end;
+    padding: 0;
+    margin-left: 4px;
+    font-weight: bold;
+    background-color: transparent;
+    color: #6565ba;
+    cursor: pointer;
+}
+
+.card.graphic {
+    width: 50%;
+    background-color: #21215bcc;
+    background-image: url('../assets/login.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border-radius: 0 20px 20px 0;
+}
+
+@media screen and (max-width: 900px) {
+    .navbar .appname {
+        display: none;
+    }    
+}
+
+@media screen and (max-width: 700px) {
+    .card.form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #forms form {
+        border-radius: 20px;
+    }
+
+    .card.graphic {
+        display: none;
+    }
+}
