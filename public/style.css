@@ -374,6 +374,7 @@ p.account-exists {
     background-size: contain;
     background-position: center;
     border-radius: 0 20px 20px 0;
+    padding: 0;
 }
 
 
@@ -390,9 +391,10 @@ p.account-exists {
 .dashboard-header h2 {
     width: 100%;
     text-align: center;
+    padding: 0.5rem;
     color: aliceblue;
     background-color: #21215b;
-    border-radius: 1rem;
+    border-radius: 2rem;
 }
 
 .dashboard-content {
@@ -405,13 +407,14 @@ p.account-exists {
     width: 90%;
     margin: 0 auto;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
     gap: 1rem;
 }
 
-.card {
+.overview-card {
     width: 30%;
+    min-width: 10rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
