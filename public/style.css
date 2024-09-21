@@ -118,7 +118,7 @@ section.hero {
     padding: 1rem 2rem;
     padding-bottom: 20rem;
     background-color: aliceblue;
-    background-image: url("../assets/background.svg");
+    background-image: url("./assets/background.svg");
     background-size: 90%;
     background-position: center;
     background-repeat: no-repeat;
@@ -155,7 +155,7 @@ section.hero {
     width: 20rem;
     min-width: 20rem;
     height: 15rem;
-    background-image: url("../assets/search.svg");
+    background-image: url("./assets/search.svg");
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
@@ -183,7 +183,7 @@ section.hero {
 }
 
 .feature-container.request {
-    background-image: url("../assets/request.svg");
+    background-image: url("./assets/request.svg");
 }
 
 .feature-text.request {
@@ -191,7 +191,7 @@ section.hero {
 }
 
 .feature-container.authorized {
-    background-image: url("../assets/authorized.svg");
+    background-image: url("./assets/authorized.svg");
 }
 
 .feature-text.authorized {
@@ -199,7 +199,7 @@ section.hero {
 }
 
 .feature-container.issues {
-    background-image: url("../assets/assistant.svg");
+    background-image: url("./assets/assistant.svg");
 }
 
 .feature-text.issues {
@@ -369,7 +369,7 @@ p.account-exists {
 .card.graphic {
     width: 50%;
     background-color: #21215bcc;
-    background-image: url('../assets/login.svg');
+    background-image: url('./assets/login.svg');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
