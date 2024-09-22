@@ -123,7 +123,7 @@ loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const identifier = document.querySelector('[name=identifier]').value;
     const password = document.querySelector('[name=password]').value;
-    const response = await fetch("http://localhost:8080/auth", {
+    const response = await fetch("https://samat-server.onrender.com/auth", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ signupForm.addEventListener("submit", async (e) => {
     const department = document.querySelector('[name=department]').value;
     const staffRole = document.querySelector('[name=staffrole]').value;
 
-    const response = await fetch("http://localhost:8080/signup", {
+    const response = await fetch("https://samat-server.onrender.com/signup", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
