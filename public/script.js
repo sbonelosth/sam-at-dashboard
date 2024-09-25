@@ -146,7 +146,7 @@ signupForm.addEventListener("submit", async (e) => {
     const email = document.querySelector('[name=email]').value;
     const fullName = document.querySelector('[name=fullname]').value;
     const password = document.querySelector('[name=password]').value;
-    const department = document.querySelector('[name=department]').value;
+    // const department = document.querySelector('[name=department]').value;
     const staffRole = document.querySelector('[name=staffrole]').value;
 
     const response = await fetch("https://samat-server.onrender.com/signup", {
@@ -154,7 +154,7 @@ signupForm.addEventListener("submit", async (e) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, fullName, password, staffRole, department })
+        body: JSON.stringify({ email, fullName, password, staffRole })
     });
 
     let data = await response.json();
