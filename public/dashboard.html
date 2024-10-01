@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Dashboard</title>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="app-info">
@@ -19,14 +21,8 @@
                 <h3>Dashboard :: SAM-AT</h3>
             </div>
         </div>
-        <div class="search-auth-group">
-            <div class="search-wrapper">
-                <input type="text" name="searchbox" placeholder="Search SAM-AT">
-                <i class="fa fa-search"></i>
-            </div>
-            <div class="btn-group">
-                <button class="auth-btn" id="login-form-btn">SIGN OUT</button>
-            </div>
+        <div class="btn-group">
+            <button class="auth-btn" id="logout-form-btn">SIGN OUT</button>
         </div>
     </nav>
     <section class="section">
@@ -42,7 +38,7 @@
                         <h3>Assets Count</h3>
                     </div>
                     <div class="card-content">
-                        <h1>25</h1>
+                        <h1></h1>
                     </div>
                 </div>
                 <div class="overview-card">
@@ -50,7 +46,7 @@
                         <h3>Assets Checked Out</h3>
                     </div>
                     <div class="card-content">
-                        <h1>12</h1>
+                        <h1>0</h1>
                     </div>
                 </div>
                 <div class="overview-card">
@@ -58,11 +54,99 @@
                         <h3>Assets Overdue</h3>
                     </div>
                     <div class="card-content">
-                        <h1>3</h1>
+                        <h1>0</h1>
                     </div>
                 </div>
             </div>
+            <div class="dashboard-header">
+                <h1></h1>
+                <h2>Asset Repository</h2>
+            </div>
+            <div class="table-container" id="asset-repo">
+            </div>
         </div>
     </section>
+    <script>
+        const cardsContainer = document.querySelector("#asset-repo");
+        document.addEventListener("DOMContentLoaded", async () => {
+            const response = await fetch("http://localhost:8080/asset", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            let data = await response.json();
+            console.log(data);
+
+            if (response.ok) {
+                populateTable(data.results);
+            } else {
+                cardsContainer.innerHTML = `Error loading data`;
+                console.log("Failed to fetch");
+            }
+        });
+
+        function populateTable(data) {
+            const assetsCount = document.querySelector(".overview-card h1");
+            assetsCount.innerHTML = data.length;
+
+            const tableContainer = document.querySelector(".table-container");
+            tableContainer.innerHTML = `<table>
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Asset Name</th>
+                                                    <th></th>
+                                                    <th>Asset Type</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>`;
+
+            const tbody = tableContainer.querySelector("tbody");
+            data.forEach((asset, index) => {
+                let res = '';
+                switch (asset.AssetType) {
+                    case "Laptop":
+                        res = "open-laptop.png";
+                        break;
+                    case "Furniture":
+                        res = "furniture.png";
+                        break;
+                    case "Screen":
+                        res = "display.png";
+                        break;
+                    case "Learning Material":
+                        res = "book.png";
+                        break;
+                    default:
+                        res = "desktop.png";
+                        break;
+                }
+                tbody.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${asset.AssetName}</td>
+                <td><img src="./assets/${res}" alt="${asset.AssetType} icon"></td>
+                <td>${asset.AssetType}</td>
+                <td class="asset-status">Available</td>
+            </tr>
+        `;
+            });
+        }
+
+        document.getElementById("logout-form-btn").addEventListener("click", () => {
+            fetch("http://localhost:8080/logout", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        });
+    </script>
 </body>
+
 </html>

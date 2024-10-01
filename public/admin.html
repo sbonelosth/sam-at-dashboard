@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="admin.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="app-info">
+            <img id="logo" width="50" height="50" src="./assets/logo.svg">
+            <div class="appname">
+                <h5>Smart Asset Management</h5>
+                <h3>Admin Dashboard</h3>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="auth-btn" id="logout-form-btn">SIGN OUT</button>
+        </div>
+    </nav>
+    <section class="section">
+        <div class="aesthetics"></div>
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <h2>Overview</h2>
+            </div>
+            <div class="dashboard-body">
+                <div class="overview-card">
+                    <div class="card-content">
+                        <h1 id="asset-count">0</h1>
+                    </div>
+                    <div class="card-header">
+                        <h3>Assets Count</h3>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-content">
+                        <h1 id="checked-out-count">0</h1>
+                    </div>
+                    <div class="card-header">
+                        <h3>Assets Checked Out</h3>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-content">
+                        <h1 id="overdue-count">0</h1>
+                    </div>
+                    <div class="card-header">
+                        <h3>Assets Overdue</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-body">
+                <div class="overview-card">
+                    <div class="card-content">
+                        <h1 id="staff-count">0</h1>
+                    </div>
+                    <div class="card-header">
+                        <h3>Staff Count</h3>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-content">
+                        <h1 id="requests-count">0</h1>
+                    </div>
+                    <div class="card-header">
+                        <h3>Total Requests</h3>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-content">
+                        <h1 id="pending-count">0</h1>
+                    </div>
+                    <div class="card-header">
+                        <h3>Pending Requests</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="request-section">
+        <h1>Requests</h1>
+        <p id="request-message">Success</p>
+        <div class="request-form">
+            <div class="input-wrapper">
+                <div class="input-icon">
+                    <i class="fa fa-t"></i>
+                    <input type="text" id="staff-id" name="staff-id" required readonly>
+                </div>
+                <label for="staff-id">Staff ID</label>
+            </div>
+            <div class="input-wrapper">
+                <div class="input-icon">
+                    <i class="fa fa-tag"></i>
+                    <input type="text" id="req-asset-id" name="req-asset-id" required>
+                </div>
+                <label for="req-asset-id">Asset ID</label>
+            </div>
+        </div>
+    </section>
+
+    <section id="admin-form">
+        <form id="capture-asset-form">
+            <p id="capture-error"></p>
+            <h3>Capture New Asset</h3>
+            <div class="input-wrapper">
+                <div class="input-icon">
+                    <i class="fa fa-t"></i>
+                    <input type="text" id="asset-name" name="assetname" required>
+                </div>
+                <label for="assetname">Asset Name</label>
+            </div>
+            <div class="input-wrapper valid">
+                <div class="input-icon">
+                    <i class="fa fa-laptop"></i>
+                    <select name="asset-type" id="asset-type">
+                        <option value="Laptop">Laptop</option>
+                        <option value="Display">Display</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Projector">Projector</option>
+                        <option value="Networking">Networking</option>
+                        <option value="Iot Device">IoT Device</option>
+                    </select>
+                </div>
+                <label for="asset-type">Asset Type</label>
+            </div>
+            <div class="input-wrapper valid">
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <select name="asset-class" id="asset-class">
+                        <option value="Staff">Staff Lending</option>
+                        <option value="Student">Student Lending</option>
+                        <option value="Limited">Limited</option>
+                    </select>
+                </div>
+                <label for="asset-class">Asset Class</label>
+            </div>
+            <div class="input-wrapper">
+                <div class="input-icon">
+                    <i class="fa fa-tag"></i>
+                    <input type="text" id="asset-id" name="asset-id" required readonly>
+                </div>
+                <label for="asset-id">Asset ID</label>
+                <p class="input-error"><i class="fa-solid fa-circle-info"></i> A valid DUT email is required</p>
+            </div>
+            <p id="generate-id" type="button">Generate Asset ID</p>
+            <button id="capture-btn" type="submit">Capture</button>
+        </form>
+    </section>
+    <script src="./admin.js"></script>
+    <script>
+        const socket = io('http://localhost:8080');
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('rfid', (data) => {
+            console.log(data);
+            document.getElementById('staff-id').value = data.userId;
+            document.getElementById('req-asset-id').focus();
+        });
+
+        const requestMsg = document.getElementById("request-message");
+        document.getElementById('req-asset-id').addEventListener("change", async () => {
+            const staffId = document.getElementById("staff-id").value;
+            const assetId = document.getElementById("req-asset-id").value;
+
+            const response = await fetch("http://localhost:8080/request", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ staffId, assetId }),
+                mode: "cors",
+            })
+
+            let data = await response.json();
+
+            if (response.ok) {
+                console.log(data.message);
+                requestMsg.style.display = "block";
+                requestMsg.innerText = data.message;
+            } else {
+                requestMsg.style.display = "block";
+                requestMsg.style.color = "red";
+                requestMsg.innerText = data.error;
+            }
+        })
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const response = await fetch("http://localhost:8080/admin", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            let data = await response.json();
+
+            if (response.ok) {
+                console.log(data);
+                populateValues(data);
+            } else {
+                console.log("Failed to fetch");
+            }
+        })
+
+        function populateValues(data) {
+            document.getElementById("asset-count").innerText = data.assetResults.length;
+            document.getElementById("staff-count").innerText = data.staffResults.length;
+            document.getElementById("requests-count").innerText = data.requestResults.length;
+
+            let assetsOverdue = 0;
+            let assetsCheckedOut = 0;
+            let pendingRequests = 0;
+
+            data.requestResults.forEach(request => {
+                if (request.StatusID === "STS004") {
+                    assetsOverdue++;
+                }
+            });
+
+            data.requestResults.forEach(request => {
+                if (request.StatusID === "STS002" || request.StatusID === "STS004") {
+                    assetsCheckedOut++;
+                }
+            });
+
+            data.requestResults.forEach(request => {
+                if (request.StatusID === "STS003") {
+                    pendingRequests++;
+                }
+            });
+
+            document.getElementById("overdue-count").innerText = assetsOverdue;
+            document.getElementById("checked-out-count").innerText = assetsCheckedOut;
+            document.getElementById("pending-count").innerText = pendingRequests;
+        }
+
+        document.getElementById("generate-id").addEventListener("click", () => {
+            document.getElementById("asset-id").value = generateAssetID();
+        });
+
+        function generateAssetID() {
+            let typeDigit, classDigit;
+
+            switch (document.getElementById("asset-type").value) {
+                case "Laptop":
+                    typeDigit = "1";
+                    break;
+                case "Display":
+                    typeDigit = "2";
+                    break;
+                case "Electronics":
+                    typeDigit = "3";
+                    break;
+                case "Projector":
+                    typeDigit = "4";
+                    break;
+                case "Networking":
+                    typeDigit = "5";
+                    break;
+                case "Iot Device":
+                    typeDigit = "6";
+                    break;
+            }
+
+            switch (document.getElementById("asset-class").value) {
+                case "Staff":
+                    classDigit = "1";
+                    break;
+                case "Student":
+                    classDigit = "2";
+                    break;
+                case "Limited":
+                    classDigit = "3";
+                    break;
+            }
+
+            return `${moment().format("YYMMDDHHmmss")}25${typeDigit}${classDigit}`;
+        }
+    </script>
+</body>
+
+</html>

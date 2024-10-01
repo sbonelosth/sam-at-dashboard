@@ -3,7 +3,7 @@
     font-family: 'Segoe UI';
 }
 
-*>button {
+* > button {
     cursor: pointer;
     font-weight: bold;
     color: aliceblue;
@@ -19,6 +19,10 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-blend-mode: color-dodge;
+}
+
+section {
+    backdrop-filter: blur(6px);
 }
 
 .navbar {
@@ -208,6 +212,19 @@ section.hero {
 
 /* Forms */
 
+#login-error, #signup-error, #capture-error {
+    display: none;
+    width: 50%;
+    margin: 0;
+    padding: 0.5rem;
+    color: red;
+    background-color: #ff000022;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px dotted red
+}
+
 section#forms {
     position: fixed;
     z-index: 100;
@@ -263,8 +280,9 @@ form#login-form {
     display: flex;
 }
 
-form .input-wrapper,
-form button {
+.input-wrapper,
+form button,
+#success button  {
     width: 80%;
     outline: 0;
     border: 0;
@@ -281,7 +299,7 @@ form button {
     background-color: transparent;
 }
 
-form .input-wrapper {
+.input-wrapper {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -340,12 +358,13 @@ form .input-wrapper {
 
 }
 
-form button {
+form button, #success button {
     background-color: #6565ba;
 }
 
 form button:hover,
-form button:active {
+form button:active,
+#success button:hover {
     background-color: #21215b;
 }
 
@@ -400,7 +419,6 @@ p.account-exists {
 .dashboard-content {
     margin: 0 auto;
     background-color: aliceblue;
-    padding-bottom: 12rem;
 }
 
 .dashboard-body {
@@ -408,30 +426,79 @@ p.account-exists {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
     gap: 1rem;
 }
 
-.overview-card {
+.table-container {
+    width: 100%;
+}
+
+table {
+    width: 85%;
+    margin: 1rem auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 0.2rem 0.5rem;
+    text-align: start;
+}
+
+th {
+    padding: 0.5rem;
+    background-color: #6565ba88;
+    color: aliceblue;
+}
+
+td > img {
+    width: 2.5rem;
+}
+
+tr:nth-of-type(2n+1) {
+    background-color:#21215b11;
+}
+
+.overview-card, .asset-card {
     width: 30%;
-    min-width: 10rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     background-color: aliceblue;
     border-radius: 20px;
-    box-shadow: 0 0 100px 0 #00000022;
     padding: 1rem;
 }
 
 .card-header {
+    min-height: 5rem;
     text-align: center;
+    font-size: small;
 }
 
 .card-content {
+    border-radius: 50%;
     text-align: center;
     font-size: 2rem;
+    line-height: 1rem;
     color: #E51684;
+}
+
+.asset-name {
+    color: #6565ba;
+    font-size: small;
+    text-align: center;
+}
+
+.asset-type {
+    font-size: small;
+    text-align: center;
+    color: #E51684;
+}
+
+.asset-status {
+    text-align: center;
+    color: #0bb65ed3;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 900px) {

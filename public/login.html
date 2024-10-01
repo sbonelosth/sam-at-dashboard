@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
+    </style>
+    <style type="text/css">
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div id="forms" class="card form">
+        <form id="login-form">
+            <p id="login-error"></p>
+            <h3>Welcome Back</h3>
+            <div class="input-wrapper email">
+                <div class="input-icon">
+                    <i class="fa fa-at"></i>
+                    <input type="text" name="identifier" required>
+                </div>
+                <label for="identifier">Username</label>
+            </div>
+            <div class="input-wrapper">
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" name="password" required>
+                    <i class="fa-solid fa-eye pw-mask"></i>
+                </div>
+                <label for="password">Password</label>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div class="card graphic"></div>
+    </div>
+    <script>
+        const loginForm = document.getElementById("login-form");
+
+        var showPassword = false;
+        const passwordMask = document.querySelectorAll(".pw-mask");
+        const passwordField = document.querySelectorAll("[name=password]");
+
+        passwordMask.forEach(btn => {
+            btn.addEventListener("click", () => {
+                showPassword = !showPassword;
+                passwordField.forEach(field => {
+                    field.type = showPassword ? "text" : "password";
+                });
+                btn.className = "pw-mask fa-solid"
+                btn.classList.add(showPassword ? "fa-eye-slash" : "fa-eye");
+            });
+        });
+
+        const loginError = document.getElementById("login-error");
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const identifier = document.querySelector('[name=identifier]').value;
+            const password = document.querySelector('[name=password]').value;
+            const response = await fetch("http://localhost:8080/login", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ identifier, password })
+            });
+
+            let data = await response.json();
+
+            if (response.ok) {
+                window.location.href = "dashboard.html";
+                console.log("User:", data);
+            }
+            else {
+                loginError.style.display = "block";
+                loginError.innerText = data.error;
+                console.log("Failed to fetch");
+            }
+        });
+
+        const inputFields = document.querySelectorAll('input[name=identifier], input[name=password]');
+        inputFields.forEach(field => {
+            field.addEventListener('focus', () => {
+                loginError.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>

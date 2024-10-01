@@ -1,6 +1,6 @@
-// static DOM
+// static DOM strings
 const strings = {
-    heroText: "A comprehensive tool for safeguarding and managing the assets of the Information Systems Department. The system ensures the security and efficient tracking of both staff members and assets, minimizing the risk of theft and loss.",
+    heroText: "Safeguarding and managing Information Systems assets.",
     featuresText: [
         "Only authorized access to the resources",
         "See what assets are available and make requests",
@@ -16,13 +16,12 @@ featureText.forEach((feature, index) => {
     feature.innerText = strings.featuresText[index];
 });
 
-// show and close forms
+// toggle, show and close forms
 const closeForm = document.getElementById("close-form");
 const openForm = document.querySelectorAll(".auth-btn");
 const formsContainer = document.getElementById("forms");
 let showSignup = false;
 
-// open, toggle and close forms
 const formToggle = document.querySelectorAll(".form-toggle-btn");
 const loginForm = document.getElementById("login-form");
 const signupForm = document.getElementById("signup-form");
@@ -48,6 +47,7 @@ closeForm.addEventListener("click", () => {
     formsContainer.style.display = "none";
 });
 
+// show or hide password
 var showPassword = false;
 const passwordMask = document.querySelectorAll(".pw-mask");
 const passwordField = document.querySelectorAll("[name=password]");
@@ -67,24 +67,9 @@ passwordMask.forEach(btn => {
 
 const inputWrappers = document.querySelectorAll(".input-wrapper");
 
-function submitButtonState() {
-    let allValid = true;
-
-    inputFields.forEach(field => {
-        if (field.parentNode === signupForm) {
-            if (!field.classList.contains("valid")) {
-                allValid = false;
-            }
-        }
-    });
-
-    signupButton.disabled = !allValid;
-}
-
-
+// form validation signup
 inputFields.forEach((field, index) => {
     field.addEventListener("keyup", (e) => {
-        console.log("Change detected");
         const wrapper = inputWrappers[index];
         if (wrapper) {
             wrapper.classList.remove("valid", "invalid");
@@ -103,11 +88,10 @@ inputFields.forEach((field, index) => {
                 error.style.display = wrapper.classList.contains("valid") ? "none" : "block";
             }
         }
-
-        submitButtonState();
     });
 });
 
+// helper functions for form validation
 function isValidEmail(email) {
     const regex = /^(?:\d{8}@dut4life\.ac\.za|[a-zA-Z]+\d*@dut\.ac\.za)$/;
     return regex.test(email);
@@ -118,12 +102,19 @@ function isValidFullname(fullname) {
     return regex.test(fullname);
 }
 
+// login and signup requests
+const loginError = document.getElementById("login-error");
+const signupError = document.getElementById("signup-error");
 
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // get form values
     const identifier = document.querySelector('[name=identifier]').value;
     const password = document.querySelector('[name=password]').value;
-    const response = await fetch("https://samat-server.onrender.com/auth", {
+
+    // send login request
+    const response = await fetch("http://localhost:8080/login", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -131,25 +122,55 @@ loginForm.addEventListener("submit", async (e) => {
         body: JSON.stringify({ identifier, password })
     });
 
+    // parse response to JSON
     let data = await response.json();
 
+    // redirect to dashboard if login is successful
     if (response.ok) {
+        if (data.RoleID == 13) {
+            window.location.href = "admin.html"; // admin dashboard
+        }
+        else if (data.RoleID == 10) {
+            window.location.href = "requests.html"; // HOD dashboard
+        }
+        else {
+            window.location.href = "dashboard.html"; // main dashboard
+        }
+        
         console.log("User:", data);
     }
     else {
+        // show error message if login fails
+        loginError.style.display = "block";
+        loginError.innerText = data.error;
         console.log("Failed to fetch");
     }
-})
+});
+
+// clear error message on focus
+inputFields.forEach(field => {
+    field.addEventListener('focus', () => {
+        loginError.style.display = 'none';
+    });
+});
 
 signupForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const email = document.querySelector('[name=email]').value;
     const fullName = document.querySelector('[name=fullname]').value;
-    const password = document.querySelector('[name=password]').value;
-    // const department = document.querySelector('[name=department]').value;
+    const password = document.querySelector('#signup-password').value;
     const staffRole = document.querySelector('[name=staffrole]').value;
 
-    const response = await fetch("https://samat-server.onrender.com/signup", {
+    // validation checks
+    if (!isValidEmail(email) || !isValidFullname(fullName) || password.length <= 7) {
+        signupError.style.display = "block";
+        signupError.innerText = "Please enter valid details";
+        return;
+    }
+
+    // if validation passes, proceed with the fetch request
+    const response = await fetch("http://localhost:8080/signup", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -157,12 +178,23 @@ signupForm.addEventListener("submit", async (e) => {
         body: JSON.stringify({ email, fullName, password, staffRole })
     });
 
+    // parse response to JSON
     let data = await response.json();
-
+    
+    // redirect to success page if signup is successful
     if (response.ok) {
-        console.log("User:", data);
-    }
-    else {
+        window.location.href = "success.html";
+    } else {
+        // show error message if signup fails
+        signupError.style.display = "block";
+        signupError.innerText = data.error;
         console.log("Failed to fetch");
     }
-})
+});
+
+// clear error message on focus
+inputFields.forEach(field => {
+    field.addEventListener('focus', () => {
+        signupError.style.display = 'none';
+    });
+});

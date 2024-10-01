@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
+    </style>
+    <style type="text/css">
+        #requests-container {
+            padding-bottom: 20rem;
+        }
+
+        .requests-dashboard {
+            background-color: aliceblue;
+            padding-bottom: 20rem;
+        }
+
+        #requests-count {
+            margin: 1rem;;
+            padding: 0.5rem;
+            background-color: #6565ba99;
+            color: aliceblue;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .asset-action {
+            width: fit-content;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            background-color: #6565ba;
+            cursor: pointer;
+            font-size: 0.7rem;
+            color: aliceblue;            
+        }
+
+        .asset-action:hover {
+            background-color: #6565ba22;
+            color: #6565ba;
+            outline-offset: 2px;
+            outline: 2px solid #6565ba;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Asset Requests :: HOD</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="app-info">
+            <img id="logo" width="50" height="50" src="./assets/logo.svg">
+            <div class="appname">
+                <h5>Smart Asset Management</h5>
+                <h3>Requests</h3>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="auth-btn" id="logout-form-btn">SIGN OUT</button>
+        </div>
+    </nav>
+    <section class="section" id="requests-container">
+        <div class="aesthetics"></div>
+        <div class="dashboard-content requests-dashboard">
+            <div class="dashboard-header">
+                <h1></h1>
+            </div>
+            <div class="dashboard-header">
+                <h2>Asset Requests<span id="requests-count">1</span></h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Asset Image</th>
+                        <th>Asset Name</th>
+                        <th>Staff Member</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td><img src="./assets/screen.png" alt="Asset Image"></td>
+                        <td>Asset Name</td>
+                        <td>Staff Member</td>
+                        <td>Pending</td>
+                        <td><button class="asset-action">Approve</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+    <script>
+
+    </script>
+</body>
+</html>

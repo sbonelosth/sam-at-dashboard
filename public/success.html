@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style type="text/css">
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #success {
+            width: 50%;
+            max-width: 30rem;
+            min-width: 20rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: aliceblue;
+            border-radius: 20px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <section id="success">
+        <img src="./assets/verified.png" alt="verifiied">
+        <h3>Your account was created successfully</h3>
+        <button id="back-to-login">Login</button>
+    </section>
+    <script>
+        const backToLogin = document.getElementById("back-to-login");
+
+        backToLogin.addEventListener("click", () => {
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+
+</html>
