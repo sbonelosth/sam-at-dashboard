@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,10 @@
         @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
     </style>
     <style type="text/css">
-        #requests-container {
-            padding-bottom: 20rem;
+        #requests-title {
+            width: 40%;
+            margin: 2rem;
+            color: aliceblue;
         }
 
         .requests-dashboard {
@@ -18,10 +21,9 @@
         }
 
         #requests-count {
-            margin: 1rem;;
+            margin: 1rem;
             padding: 0.5rem;
-            background-color: #6565ba99;
-            color: aliceblue;
+            color: #E51684;
             font-size: 1.5rem;
             font-weight: bold;
         }
@@ -34,7 +36,7 @@
             background-color: #6565ba;
             cursor: pointer;
             font-size: 0.7rem;
-            color: aliceblue;            
+            color: aliceblue;
         }
 
         .asset-action:hover {
@@ -43,17 +45,22 @@
             outline-offset: 2px;
             outline: 2px solid #6565ba;
         }
+
+        #nothing-to-show {
+            text-align: center;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Asset Requests :: HOD</title>
+    <title>Pending Requests</title>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="app-info">
             <img id="logo" width="50" height="50" src="./assets/logo.svg">
             <div class="appname">
                 <h5>Smart Asset Management</h5>
-                <h3>Requests</h3>
+                <h3>Pending Requests</h3>
             </div>
         </div>
         <div class="btn-group">
@@ -62,12 +69,13 @@
     </nav>
     <section class="section" id="requests-container">
         <div class="aesthetics"></div>
+        <h1 id="requests-title">The Following Requests Require Your Approval To Be Checked</h1>
         <div class="dashboard-content requests-dashboard">
             <div class="dashboard-header">
                 <h1></h1>
             </div>
             <div class="dashboard-header">
-                <h2>Asset Requests<span id="requests-count">1</span></h2>
+                <h2>Asset Requests<span id="requests-count">0</span></h2>
             </div>
             <div class="table-container">
                 <table>
@@ -78,19 +86,54 @@
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
-                        <td><img src="./assets/screen.png" alt="Asset Image"></td>
-                        <td>Asset Name</td>
-                        <td>Staff Member</td>
-                        <td>Pending</td>
-                        <td><button class="asset-action">Approve</button></td>
-                    </tr>
                 </table>
             </div>
         </div>
     </section>
+    <footer>
+        &copy; Smart Asset Management (SAM-AT)
+    </footer>
     <script>
+        const requestsCount = document.querySelector("#requests-count");
 
+        document.addEventListener("DOMContentLoaded", async () => {
+            const response = await fetch("http://localhost:8080/pending", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                mode: "cors"
+            });
+
+            let data = await response.json();
+            if (response.ok) {
+                requestsCount.innerText = data.length;
+                console.log(data);
+            } else {    
+                document.querySelector("table").innerHTML = `<h3 id="nothing-to-show">There are currently no requests</h3>`; 
+                requestsCount.innerText = 0;
+                console.log("Failed to fetch");
+            }
+        });
+
+        function populateTable(data) {
+            const tableContainer = document.querySelector("table");
+
+            data.forEach((asset) => {
+                tableContainer.innerHTML += `<tr>
+                    <td><img src="./assets/screen.png" alt="Asset Image"></td>
+                    <td>${data.results}</td>
+                    <td>${data.staffName}</td>
+                    <td>Pending</td>
+                    <td><button class="asset-action">Approve</button></td>
+                </tr>`;
+            });
+        }
+
+        document.getElementById("logout-form-btn").addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
     </script>
 </body>
+
 </html>

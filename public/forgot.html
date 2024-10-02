@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style type="text/css">
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(6px);
+        }
+
+        #mail-message {
+            font-weight: bold;
+            color: indianred;
+        }
+
+        #success img {
+            margin: 1rem;
+        }
+
+        #success {
+            width: 50%;
+            max-width: 30rem;
+            min-width: 20rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: aliceblue;
+            border-radius: 20px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+    <title>Forgot Password</title>
+</head>
+
+<body>
+    <section id="success">
+        <img src="./assets/forgot-password.png" alt="verifiied">
+        <p id="mail-message"></p>
+        <div class="input-wrapper email">
+            <div class="input-icon">
+                <i class="fa fa-at"></i>
+                <input type="text" name="email" required>
+            </div>
+            <label for="email">Work Email</label>
+        </div>
+        <h3>Your password will be sent to your work email</h3>
+        <button id="mail-btn">Proceed</button>
+        <a href="index.html" id="back-to-login">Back to Login</a>
+    </section>
+    <script>
+        const sendEmail = document.getElementById("mail-btn");
+
+        sendEmail.addEventListener("click", async () => {
+            const email = document.getElementsByName("email")[0].value;
+            const response = await fetch("http://localhost:8080/forgot", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email })
+            })
+
+            let data = await response.json();
+
+            if (response.ok) {
+                document.getElementById("mail-message").innerText = data.message;
+            } else {
+                document.getElementById("mail-message").innerText = data.error;
+            }
+        });
+
+        backToLogin.addEventListener("click", () => {
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+
+</html>

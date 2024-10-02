@@ -13,8 +13,10 @@
             width: 100%;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(6px);
         }
     </style>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -41,6 +43,7 @@
                 </div>
                 <label for="password">Password</label>
             </div>
+            <a href="forgot.html" id="forgot-password">Forgot Password?</a>
             <button type="submit">Login</button>
         </form>
         <div class="card graphic"></div>
@@ -79,11 +82,24 @@
 
             let data = await response.json();
 
+            const roleID = parseInt(data.user.RoleID);
+
+            // redirect to dashboard if login is successful
             if (response.ok) {
-                window.location.href = "dashboard.html";
+                if (roleID === 13) {
+                    window.location.href = "admin.html"; // admin dashboard
+                }
+                else if (roleID === 10) {
+                    window.location.href = "requests.html"; // HOD dashboard
+                }
+                else {
+                    window.location.href = "dashboard.html"; // main dashboard
+                }
+
                 console.log("User:", data);
             }
             else {
+                // show error message if login fails
                 loginError.style.display = "block";
                 loginError.innerText = data.error;
                 console.log("Failed to fetch");

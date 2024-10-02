@@ -91,11 +91,11 @@
     </section>
     <section class="request-section">
         <h1>Requests</h1>
-        <p id="request-message">Success</p>
+        <p id="request-message"></p>
         <div class="request-form">
             <div class="input-wrapper">
                 <div class="input-icon">
-                    <i class="fa fa-t"></i>
+                    <i class="fa fa-user"></i>
                     <input type="text" id="staff-id" name="staff-id" required readonly>
                 </div>
                 <label for="staff-id">Staff ID</label>
@@ -158,6 +158,9 @@
             <button id="capture-btn" type="submit">Capture</button>
         </form>
     </section>
+    <footer>
+        &copy; Smart Asset Management (SAM-AT)
+    </footer>
     <script src="./admin.js"></script>
     <script>
         const socket = io('http://localhost:8080');
@@ -291,6 +294,10 @@
 
             return `${moment().format("YYMMDDHHmmss")}25${typeDigit}${classDigit}`;
         }
+    
+        document.getElementById("logout-form-btn").addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
     </script>
 </body>
 

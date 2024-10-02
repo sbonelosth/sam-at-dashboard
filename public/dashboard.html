@@ -46,7 +46,7 @@
                         <h3>Assets Checked Out</h3>
                     </div>
                     <div class="card-content">
-                        <h1>0</h1>
+                        <h1 id="checked-out-count">0</h1>
                     </div>
                 </div>
                 <div class="overview-card">
@@ -54,7 +54,7 @@
                         <h3>Assets Overdue</h3>
                     </div>
                     <div class="card-content">
-                        <h1>0</h1>
+                        <h1 id="overdue-count">0</h1>
                     </div>
                 </div>
             </div>
@@ -66,6 +66,9 @@
             </div>
         </div>
     </section>
+    <footer>
+        &copy; Smart Asset Management (SAM-AT)
+    </footer>
     <script>
         const cardsContainer = document.querySelector("#asset-repo");
         document.addEventListener("DOMContentLoaded", async () => {
@@ -114,16 +117,28 @@
                         res = "open-laptop.png";
                         break;
                     case "Furniture":
-                        res = "furniture.png";
+                        res = "school-desk.png";
                         break;
-                    case "Screen":
+                    case "Display":
                         res = "display.png";
                         break;
                     case "Learning Material":
                         res = "book.png";
                         break;
+                    case "Electronics":
+                        res = "joystick.png";
+                        break;
+                    case "Projector":
+                        res = "projector.png";
+                        break;
+                    case "Networking":
+                        res = "router.png";
+                        break;
+                    case "Iot Device":
+                        res = "iot.png";
+                        break;
                     default:
-                        res = "desktop.png";
+                        res = "search.png";
                         break;
                 }
                 tbody.innerHTML += `
@@ -133,18 +148,50 @@
                 <td><img src="./assets/${res}" alt="${asset.AssetType} icon"></td>
                 <td>${asset.AssetType}</td>
                 <td class="asset-status">Available</td>
-            </tr>
-        `;
+            </tr>`;
             });
         }
 
-        document.getElementById("logout-form-btn").addEventListener("click", () => {
-            fetch("http://localhost:8080/logout", {
-                method: "POST",
+        document.addEventListener("DOMContentLoaded", async () => {
+            const response = await fetch("http://localhost:8080/admin", {
+                method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
                 },
+            })
+
+            let data = await response.json();
+
+            if (response.ok) {
+                console.log(data);
+                populateValues(data);
+            } else {
+                console.log("Failed to fetch");
+            }
+        })
+
+        function populateValues(data) {
+            let assetsOverdue = 0;
+            let assetsCheckedOut = 0;
+            
+            data.requestResults.forEach(request => {
+                if (request.StatusID === "STS004") {
+                    assetsOverdue++;
+                }
             });
+
+            data.requestResults.forEach(request => {
+                if (request.StatusID === "STS002" || request.StatusID === "STS004") {
+                    assetsCheckedOut++;
+                }
+            });
+
+            document.getElementById("overdue-count").innerText = assetsOverdue;
+            document.getElementById("checked-out-count").innerText = assetsCheckedOut;
+        }
+
+        document.getElementById("logout-form-btn").addEventListener("click", () => {
+            window.location.href = "index.html";
         });
     </script>
 </body>

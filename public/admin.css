@@ -73,11 +73,14 @@ section#admin-form {
 
 #request-message {
     display: none;
+    padding-top: 1rem;
     text-align: center;
+    color: #3fda8c;
+    background-color: aliceblue;
     font-size: 1.3rem;
     margin: 0;
     padding-bottom: 1rem;
-    color: aliceblue;
+    
 }
 
 @media screen and (max-width: 900px) {

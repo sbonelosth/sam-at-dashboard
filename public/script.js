@@ -125,18 +125,20 @@ loginForm.addEventListener("submit", async (e) => {
     // parse response to JSON
     let data = await response.json();
 
+    const roleID = parseInt(data.user.RoleID);
+
     // redirect to dashboard if login is successful
     if (response.ok) {
-        if (data.RoleID == 13) {
+        if (roleID === 13) {
             window.location.href = "admin.html"; // admin dashboard
         }
-        else if (data.RoleID == 10) {
+        else if (roleID === 10) {
             window.location.href = "requests.html"; // HOD dashboard
         }
         else {
             window.location.href = "dashboard.html"; // main dashboard
         }
-        
+
         console.log("User:", data);
     }
     else {
@@ -180,7 +182,7 @@ signupForm.addEventListener("submit", async (e) => {
 
     // parse response to JSON
     let data = await response.json();
-    
+
     // redirect to success page if signup is successful
     if (response.ok) {
         window.location.href = "success.html";
