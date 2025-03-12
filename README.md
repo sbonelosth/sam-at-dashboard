@@ -41,6 +41,8 @@ This project was a group effort, and the following members contributed to its su
 )
 ![Hardware Design](<img width="512" alt="Image" src="https://github.com/user-attachments/assets/4146e89b-ed97-4506-86f0-c92e1d5bc586" />)
 
+<img width="512" alt="Image" src="https://github.com/user-attachments/assets/4146e89b-ed97-4506-86f0-c92e1d5bc586" />
+
 ## Future Enhancements
 - Improve system efficiency and performance.
 - Implement a mobile-friendly interface.
