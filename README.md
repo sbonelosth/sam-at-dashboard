@@ -11,7 +11,7 @@ The Smart Asset Management System is a web application designed to track assets 
 ## Technologies Used
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: MongoDB Database
-- **Cloud Services**: AWS IoT Cloud with AWS RDS Database
+
 
 ## Project Architecture
 The project consists of both cloud and hardware components:
