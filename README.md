@@ -37,8 +37,9 @@ This project was a group effort, and the following members contributed to its su
 - **[Khawulela Mpono](https://www.linkedin.com/in/khawulela-mpono-9a7744163/)**
 
 ## Screenshots
-![Cloud Architecture](sam.png)
-![Hardware Design](sam2.png)
+![Cloud Architecture](<img width="478" alt="Image" src="https://github.com/user-attachments/assets/1fba01e5-3ba5-4f36-8a49-8f1be7b59155" />
+)
+![Hardware Design](<img width="512" alt="Image" src="https://github.com/user-attachments/assets/4146e89b-ed97-4506-86f0-c92e1d5bc586" />)
 
 ## Future Enhancements
 - Improve system efficiency and performance.
